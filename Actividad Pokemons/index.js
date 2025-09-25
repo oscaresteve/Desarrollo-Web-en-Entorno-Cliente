@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <form id="buscador">
     <input type="text" id="input-search" placeholder="buscar...">
     <button type="submit" id="button-search">Buscar</button>
-</form>
+  </form>
   `;
   const divSortButtons = document.createElement("div");
   divSortButtons.innerHTML = sortButtons;
@@ -66,9 +66,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const buttonSearch = divSortButtons.querySelector("#button-search");
+  const searchField = divSortButtons.querySelector("#input-search");
+
   buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
-    const searchText = divSortButtons.querySelector("#input-search").value;
+    const searchText = searchField.value;
+    const filteredPokemons = pokemons.filter((p) =>
+      p.name.english.toLowerCase().includes(searchText.toLowerCase())
+    );
+    printPokemons(filteredPokemons.slice(0, 20));
+  });
+
+  searchField.addEventListener("input", (event) => {
+    event.preventDefault();
+    const searchText = searchField.value;
     const filteredPokemons = pokemons.filter((p) =>
       p.name.english.toLowerCase().includes(searchText.toLowerCase())
     );
