@@ -59,19 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
   divSortButtons.innerHTML = sortButtons;
   const sortButton = divSortButtons.querySelector("#sort-name");
   sortButton.addEventListener("click", () => {
-    const sortedPokemons = [...pokemons].sort((a, b) => {     
-     return a.name.english < b.name.english ? -1 : 1
-    }
-    );
+    const sortedPokemons = [...pokemons].sort((a, b) => {
+      return a.name.english < b.name.english ? -1 : 1;
+    });
     printPokemons(sortedPokemons.slice(0, 20));
   });
 
-  const buttonSearch = divSortButtons.querySelector('#button-search');
-  buttonSearch.addEventListener('click',(event)=>{
+  const buttonSearch = divSortButtons.querySelector("#button-search");
+  buttonSearch.addEventListener("click", (event) => {
     event.preventDefault();
-    const searchText = divSortButtons.querySelector('#input-search').value;
-    const filteredPokemons = pokemons.filter(p=> p.name.english.toLowerCase().includes(searchText.toLowerCase()))
-     printPokemons(filteredPokemons.slice(0, 20));
+    const searchText = divSortButtons.querySelector("#input-search").value;
+    const filteredPokemons = pokemons.filter((p) =>
+      p.name.english.toLowerCase().includes(searchText.toLowerCase())
+    );
+    printPokemons(filteredPokemons.slice(0, 20));
   });
 
   navBar.append(divSortButtons, resetButton, ...botons);
