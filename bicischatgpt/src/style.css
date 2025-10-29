@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+input {
+    margin-bottom: 20px;
+    padding: 5px;
+    width: 200px;
+}
+
+.bike-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 0 5px;
+}

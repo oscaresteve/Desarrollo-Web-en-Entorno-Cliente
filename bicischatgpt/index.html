@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./src/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bicischatgpt</title>
+  </head>
+  <body>
+    <h2>Filtro por nombre:</h2>
+    <input type="text" name="" id="input" placeholder="Escribe para filtrar...">
+
+    <input type="button" value="Ordenar A-Z" id="sort-az">
+    <input type="button" value="Ordenar Z-A" id="sort-za">
+
+    <label for="select">Cantidad por pagina</label>
+    <select id="select">
+      <option value="3">3</option>
+      <option value="5" selected>5</option>
+      <option value="10">10</option>
+    </select>
+
+    <div id="app"></div>
+
+    <div class="pagination">
+      <button id="previous">Anterior</button>
+      <span id="page">Página 1</span>
+      <button id="next">Siguiente</button>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
