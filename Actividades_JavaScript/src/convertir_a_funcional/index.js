@@ -19,13 +19,15 @@ export {
   markFavorites,
 };
 
+let alerts = [];
+
 const getAlerts = async () => {
   const url = "https://data.food.gov.uk/food-alerts/id?_limit=100";
   const res = await fetch(url);
   const data = await res.json();
-  console.log(data);
+  console.log(data.items);
 
-  return data;
+  return data.items;
 };
 
 const mapFavorites = (favorites) => (alerts) => {
@@ -43,11 +45,54 @@ const toggleToFavorites = (favorites) => (alertId) => {
   return newFavorites;
 };
 
-const createAlertDiv = () => {};
+const createAlertDiv = (alert) => {
+  const divAlert = document.createElement("div");
+  divAlert.className = "#DIV";
 
-const createAlertsDivs = () => {};
-const addClickListeners = () => {};
-const markFavorites = () => {};
+  const title = document.createElement("h2");
+  title.textContent = alert.title;
+
+  const created = document.createElement("h3");
+  created.textContent = alert.created;
+
+  const problems = document.createElement("ul");
+  problems.className = "problems";
+
+  alert.problem.forEach((p) => {
+    const problem = document.createElement("li");
+    problem.textContent = p.riskStatement;
+
+    problems.appendChild(problem);
+  });
+
+  divAlert.append(title, created, problems);
+
+  return divAlert;
+};
+
+const createAlertsDivs = (alerts) => alerts.map(createAlertDiv);
+
+const addClickListeners = (divs, handler) => {
+  const newDivs = divs.map((div) => {
+    const newDiv = div.cloneNode(true);
+    newDiv.addEventListener("click", handler);
+    return newDiv;
+  });
+
+  return newDivs;
+};
+
+const markFavorites = (favorites) => (divsFavorites) => {
+  divsFavorites.forEach((div) => {
+    if (favorites.has(div.dataset.id)) {
+      div.classList.add("favorita");
+    }
+  });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+});
 
 /*
 let alertasFavoritas = [];
