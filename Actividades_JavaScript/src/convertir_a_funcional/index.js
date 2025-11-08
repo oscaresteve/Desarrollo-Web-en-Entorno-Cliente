@@ -51,6 +51,9 @@ const createAlertDiv = (alert) => {
   const created = document.createElement("h3");
   created.textContent = alert.created;
 
+  const titleProblems = document.createElement("h4");
+  titleProblems.textContent = "Problems:";
+
   const problems = document.createElement("ul");
   problems.className = "problems";
 
@@ -61,50 +64,54 @@ const createAlertDiv = (alert) => {
     problems.appendChild(problem);
   });
 
-  divAlert.append(title, created, problems);
+  const titleDetails = document.createElement("h4");
+  titleDetails.textContent = "Details:";
+
+  const details = document.createElement("ul");
+  details.className = "details";
+
+  alert.productDetails?.forEach((d) => {
+    const detail = document.createElement("li");
+    detail.textContent = d.productName;
+    details.appendChild(detail);
+  });
+
+  divAlert.append(
+    title,
+    created,
+    titleProblems,
+    problems,
+    titleDetails,
+    details
+  );
 
   return divAlert;
 };
 
 const createAlertsDivs = (alerts) => alerts.map(createAlertDiv);
 
-const addClickListeners = (divs, handler) => {
-  const newDivs = divs.map((div) => {
+const addClickListeners = (divs, handler) =>
+  divs.map((div) => {
     const newDiv = div.cloneNode(true);
     newDiv.addEventListener("click", handler);
     return newDiv;
   });
 
-  return newDivs;
-};
-
 const markFavorites = (favorites) => (divsFavorites) => {
   divsFavorites.forEach((div) => {
-    if (favorites.has(div.dataset.id)) {
-      div.classList.add("favorita");
-    } else {
-      div.classList.remove("favorita");
-    }
+    div.classList.remove("favorita");
+    favorites.has(div.dataset.id) && div.classList.add("favorita");
   });
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  let alerts = await getAlerts();
+  const alerts = await getAlerts();
   let favorites = new Set([]);
-  const alertsWithFav = mapFavorites(favorites)(alerts);
-  const divsFavorites = createAlertsDivs(alertsWithFav);
 
-  let clickableDivs;
+  const divs = addClickListeners(createAlertsDivs(alerts), (ev) => {
+    favorites = toggleToFavorites(favorites)(ev.currentTarget.dataset.id);
+    markFavorites(favorites)(divs);
+  });
 
-  const handler = (ev) => {
-    const id = ev.currentTarget.dataset.id;
-    favorites = toggleToFavorites(favorites)(id);
-    markFavorites(favorites)(clickableDivs);
-    console.log(favorites);
-
-    console.log(clickableDivs);
-  };
-
-  clickableDivs = addClickListeners(divsFavorites, handler);
-  document.getElementById("container").append(...clickableDivs);
+  document.getElementById("container").append(...divs);
 });
