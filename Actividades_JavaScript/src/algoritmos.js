@@ -1,17 +1,23 @@
-export {TicTacToeGetInitialState, 
-    TicTacToeGetNextState, 
-    TicTacToeGetValidMoves, 
-    TicTacToeCheckWin,
-    TicTacToeGetWinAndTerminated,
-    TicTacToeChangePlayer,
-    TicTacToeChangePerspective,
-    MCExpandNode, MCIsFullExpandedNode, MCTSelectBestNode,
-    MCSimulate, MCBackPropagate,
-    MCGetUcb, MCTSearch, MCStateToString, MCGetRandomMove,
-
-    middleOfArray, 
-    sumMultiples
-}
+export {
+  TicTacToeGetInitialState,
+  TicTacToeGetNextState,
+  TicTacToeGetValidMoves,
+  TicTacToeCheckWin,
+  TicTacToeGetWinAndTerminated,
+  TicTacToeChangePlayer,
+  TicTacToeChangePerspective,
+  MCExpandNode,
+  MCIsFullExpandedNode,
+  MCTSelectBestNode,
+  MCSimulate,
+  MCBackPropagate,
+  MCGetUcb,
+  MCTSearch,
+  MCStateToString,
+  MCGetRandomMove,
+  middleOfArray,
+  sumMultiples,
+};
 
 /**
  * Estos ejercicios son para practicar algoritmos y estructuras de datos con Javascript.
@@ -19,15 +25,15 @@ export {TicTacToeGetInitialState,
  * Pueden ser útiles para aprender o repasar fundamentos de programación.
  */
 
-
 /* Bloque 1: El juego del 3 en raya */
 
-function TicTacToeGetInitialState(){
-    // Esta función retorna un array de 3x3 lleno de 0s
+function TicTacToeGetInitialState(size = 3) {
+  // Esta función retorna un array de 3x3 lleno de 0s
+  return new Array(size).fill(0).map(() => new Array(size).fill(0));
 }
 
-function TicTacToeGetNextState(state,move,player){
-    /*
+function TicTacToeGetNextState(state, move, player) {
+  /*
     Esta función recibe: 
     - Un estado en forma de matriz 3x3
     - Una acción que es un entero de 0 a 9, que indica a qué posición se moverá el player
@@ -35,10 +41,14 @@ function TicTacToeGetNextState(state,move,player){
     Debe retornar una copia del estado donde se ha puesto el player
     en el lugar donde indica move
      */
+    const newState = structuredClone(state);
+    newState[Math.floor(move/3)][move%3] = player;
+    
+    return newState
 }
 
-function TicTacToeGetValidMoves(state){
-    /*
+function TicTacToeGetValidMoves(state) {
+  /*
     Esta función retorna un array con las "moves" o movimientos válidos
     Un movimiento válido es la posición donde el tablero tiene un 0
     El resultado es un array de 1s y 0s donde un 1 significa que el movimiento de esa
@@ -46,39 +56,42 @@ function TicTacToeGetValidMoves(state){
     En este resultado: [0,0,0 ,1,0,0, 1,0,1] significa que se puede poner ficha en
     las posiciones 3,6,8 del tablero. 
     */
+   const validMoves = state.flat().map(pos => 
+    pos === 0 ? pos = 1 : pos = 0
+   )
+   return validMoves;
 }
 
-function TicTacToeCheckWin(state,move){
-    /*
+function TicTacToeCheckWin(state, move) {
+  /*
     Esta función retorna true o false dependiendo si, con el move,
     el jugador actual ha ganado.
     En el estado que se le pasa ya se ha realizado el move
-    */ 
+    */
 }
 
-function TicTacToeGetWinAndTerminated(state,move){
-    /**
-     * Esta función recibe un estado y la última acción realizada
-     * Devuelve un objecto que tendrá esta estructura:
-     * {win: boolean, terminated: boolean}
-     * Esta indicará si ha ganado y si la partida a acabado
-     * Una partida acaba si alguien gana o en tablas, es decir, que 
-     * ya no quedan jugadas válidas pero no ha ganado nadie.
-     */
+function TicTacToeGetWinAndTerminated(state, move) {
+  /**
+   * Esta función recibe un estado y la última acción realizada
+   * Devuelve un objecto que tendrá esta estructura:
+   * {win: boolean, terminated: boolean}
+   * Esta indicará si ha ganado y si la partida a acabado
+   * Una partida acaba si alguien gana o en tablas, es decir, que
+   * ya no quedan jugadas válidas pero no ha ganado nadie.
+   */
 }
 
-function TicTacToeChangePlayer(player){
-    // Retorna el otro jugador, si es 1 retorna -1 i viceversa
+function TicTacToeChangePlayer(player) {
+  // Retorna el otro jugador, si es 1 retorna -1 i viceversa
 }
 
-function TicTacToeChangePerspective(state){
-    /*
+function TicTacToeChangePerspective(state) {
+  /*
     Esta función sirve para invertir el juego. 
     En el caso de ese juego, debe poner -1 donde pone 1 y 1 donde pone -1
     OJO, que en JS existe el -0
     */
 }
-
 
 /* Bloque 2 El algoritmo Montecarlo Tree Search */
 
@@ -140,20 +153,20 @@ Esto se hará cuando se quiera usar el algoritmo y está hecho en los tests
 */
 
 const MCStateToString = (state) => {
-    /*
+  /*
     Esta función auxiliar retornará el estado del juego en formato string, de manera que se vea bien por consola, por ejemplo
     */
-   }
+};
 
 const MCGetRandomMove = (validMoves) => {
-    /*
+  /*
     Esta función recibe un array de posibles movimientos, de manera que un 1 significa que ese movimiento es legal y un 0 que no
     Retorna la posición de un movimiento aleatorio de los que son legales.
     */
-}
+};
 
-const MCExpandNode = (game)=> (node)=> {
-    /*
+const MCExpandNode = (game) => (node) => {
+  /*
     Un nodo tendrá un atributo expandableMoves, que tiene la lista
     de movimientos válidos que quedan por explorar. 
     La lista es un array de 1s y 0s donde un 1 significa que es válido y que es expandible.
@@ -187,19 +200,18 @@ const MCExpandNode = (game)=> (node)=> {
         "children": []
     }
     */
-}
+};
 
-
-const  MCIsFullExpandedNode = (node)=>{
-    /*
+const MCIsFullExpandedNode = (node) => {
+  /*
     Un nodo se considera totalmente expandido 
     si no hay más movimientos válidos y tiene al menos un nodo hijo
     Esta función retorna true o false si esto pasa. 
     */
- }
+};
 
 const MCGetUcb = (node, parentNode, C) => {
-    /*
+  /*
     Upper Confidence Bound es la elegibilidad de un nodo respecto a los demás. 
     Es importante elegir buenos nodos, es decir, que tengan un buen balance entre 
     los éxitos finales y las veces que se ha visitado. Pero también es necesario
@@ -219,11 +231,10 @@ const MCGetUcb = (node, parentNode, C) => {
 
     Esta función recibe el nodo, el nodo padre y C y retorna el valor de UCB
     */
-   }
+};
 
-
-const MCTSelectBestNode = (root) =>{
-    /*
+const MCTSelectBestNode = (root) => {
+  /*
     Para seleccionar el mejor nodo, hay que elegir recursivamente
     el mejor de los hijos de un nodo. De esta manera, el mejor elige su mejor hijo
     y así sucesivamente hasta llegar a un nodo que tiene menos de 2 hijos
@@ -234,23 +245,21 @@ const MCTSelectBestNode = (root) =>{
     
     Esta función recibe un nodo que actúa como raíz y se llama a sí misma para obtener el mejor
     nodo hijo. 
-    */    
-}
-
+    */
+};
 
 const MCSimulate = (game) => (node) => {
-
-    /*
+  /*
     Esta función hace un simulacro de partida aleatoria a partir de un nodo. 
     Retorna el jugador ganador después del simulacro. 
     Para ello, copiará el estado del nodo, elegirá un movimiento aleatorio de entre los legales y
     ejecutará ese movimiento en el juego. Si els estado resultante tiene un ganador, lo retornará.
     En caso de acabar el juego con empate, retornará lo que el juego retorna como valor del empate.  
     */
-}
+};
 
-const MCBackPropagate = (node,value) => {
-    /*
+const MCBackPropagate = (node, value) => {
+  /*
     Esta función se aplica a un nodo sobre el que ya se ha hecho la simulación.
     El resultado de la simulación es un 0, 1 o -1, dependiendo del ganador.
     Este resultado hay que sumarlo al valor del nodo. También se incrementará el número de visitas.
@@ -261,77 +270,76 @@ const MCBackPropagate = (node,value) => {
     Por simplicidad y rendimiento, esta función no retorna nada, ha de mutar el nodo
     que se pasa por parámetros. 
     */
-}
+};
 
-
-function MCTSearch(game, state, numSearches){
-    /* Está pensado para siempre ver la mejor jugada para el jugador 1
+function MCTSearch(game, state, numSearches) {
+  /* Está pensado para siempre ver la mejor jugada para el jugador 1
     // En caso de querer la mejor para el jugador -1 hay que cambiar la perspectiva
     // antes de buscar. 
     Dejamos el algoritmo de búsqueda para que se entienda qué se espera con las
     funciones anteriores. 
     */
 
-    let root = {
-        state: state,
-        moveTaken: null,
-        value: 0, 
-        visits: 0, 
-        expandableMoves: [...game.getValidMoves(state)],
-        parent: null,
-        player: -1,
-        children: []};
+  let root = {
+    state: state,
+    moveTaken: null,
+    value: 0,
+    visits: 0,
+    expandableMoves: [...game.getValidMoves(state)],
+    parent: null,
+    player: -1,
+    children: [],
+  };
 
-    for (let search=0; search<numSearches; search++){
-        // Selecciona de forma recursiva el mejor nodo si ya se ha expandido o el mismo:
-        let node = MCTSelectBestNode(root);
-        // comprueba las ganancias del mejor nodo y si ha terminado
-        let {win, terminated} = game.getWinAndTerminated(node.state, node.moveTaken);
-        // Pone el value a -win para el backpropagate
-        let value = win;
+  for (let search = 0; search < numSearches; search++) {
+    // Selecciona de forma recursiva el mejor nodo si ya se ha expandido o el mismo:
+    let node = MCTSelectBestNode(root);
+    // comprueba las ganancias del mejor nodo y si ha terminado
+    let { win, terminated } = game.getWinAndTerminated(
+      node.state,
+      node.moveTaken
+    );
+    // Pone el value a -win para el backpropagate
+    let value = win;
 
-        if (!terminated){
-            // Si no ha terminado, se expande:
-            node = MCExpandNode(game)(node);
-            // Sobre el nodo expandido se simula hasta el final una partida:
-            value = MCSimulate(game)(node);
-        }
-        if(terminated && value === 1 && node.parent === root){
-            // Que gane haciendo un solo movimiento
-            value = Number.MAX_SAFE_INTEGER;
-            search = numSearches;
-        }
-        value = node.player*value;
-
-        MCBackPropagate(node,value);
+    if (!terminated) {
+      // Si no ha terminado, se expande:
+      node = MCExpandNode(game)(node);
+      // Sobre el nodo expandido se simula hasta el final una partida:
+      value = MCSimulate(game)(node);
     }
-
-
-    let moveWins = Array(game.moveSize).fill(0);
-
-    let moveVisits = Array(game.moveSize).fill(0);
-    for(let child of root.children){
-        moveWins[child.moveTaken] = child.value;
-        moveVisits[child.moveTaken] = child.visits;
+    if (terminated && value === 1 && node.parent === root) {
+      // Que gane haciendo un solo movimiento
+      value = Number.MAX_SAFE_INTEGER;
+      search = numSearches;
     }
-    
-    let winsTotal = moveWins.reduce((p,v)=> p+v);
-   
-    let rootNoParent = structuredClone(root);
-    removeAttribute(rootNoParent,'parent');
-    console.log(rootNoParent); // Dejamos esto para poder copiar el objeto y analizar el algoritmo
-    return moveWins.map( v=> v/winsTotal);
+    value = node.player * value;
+
+    MCBackPropagate(node, value);
+  }
+
+  let moveWins = Array(game.moveSize).fill(0);
+
+  let moveVisits = Array(game.moveSize).fill(0);
+  for (let child of root.children) {
+    moveWins[child.moveTaken] = child.value;
+    moveVisits[child.moveTaken] = child.visits;
+  }
+
+  let winsTotal = moveWins.reduce((p, v) => p + v);
+
+  let rootNoParent = structuredClone(root);
+  removeAttribute(rootNoParent, "parent");
+  console.log(rootNoParent); // Dejamos esto para poder copiar el objeto y analizar el algoritmo
+  return moveWins.map((v) => v / winsTotal);
 }
 
-
-function removeAttribute(object,attribute){
-    delete object[attribute];
-    for(let c of object.children){
-        removeAttribute(c,attribute)
-    }
+function removeAttribute(object, attribute) {
+  delete object[attribute];
+  for (let c of object.children) {
+    removeAttribute(c, attribute);
+  }
 }
-
-
 
 /*
 Bloque 3: Retos algortítmicos
@@ -340,10 +348,9 @@ En este bloque se pide solucionar retos que son más complicados algorítmicamen
 que la dificultad que plantea el lenguaje Javascript
 */
 
-
 // Dificultad: Sencillo
-function middleOfArray(array){
-    /*
+function middleOfArray(array) {
+  /*
     Esta función recibe como parámetros un array y retorna la 
     segunda mitad del array. en caso de tener un número impar
     de elementos, retorna del medio al final, con un número par, 
@@ -351,8 +358,8 @@ function middleOfArray(array){
     */
 }
 
-function sumMultiples(numbers,limit){
-/*
+function sumMultiples(numbers, limit) {
+  /*
 Esta función acepta una lista de números y retorna la suma de los 
 múltiplos de esos números que sean menores que el número límite.
 Por ejemplo: sumMultiples([3,5],10) retorna 23, ya que suma 3,5,6,9 que son los

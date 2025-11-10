@@ -70,6 +70,10 @@ function getMultipleData(urls) {
   /* Esta función hará una petición a fakeNetwork de cada elemento del array urls
     Retornará la promesa de un array de resultados o de null en caso de fallo en la descarga de alguna url
     */
+
+  urls.map(url => {
+    fakeNetwork(url)
+  })
 }
 
 function getMultipleDataPromises(urls) {
